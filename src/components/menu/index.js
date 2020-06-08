@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {Media, Card,  CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle} from "reactstrap";
+import './menu.css';
+import DishDetail from "../dish-detail";
 
 
 const Menu = (props) => {
@@ -11,24 +13,40 @@ const Menu = (props) => {
         setState(dish);
     };
 
-    const renderDish = (dish) => {
-        if(dish != null) {
-            return(
-                <Card>
-                    <CardImg width="100%" object src={dish.image} alt={dish.name}/>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            );
-        }
-        else {
-            return(
-                <div></div>
-            );
-        }
-    };
+    // const renderDish = (dish) => {
+    //     if(dish != null) {
+    //         return(
+    //             <React.Fragment>
+    //                 <div className="contain">
+    //                     <Card className="card1">
+    //                     <CardImg width="100%" object src={dish.image} alt={dish.name}/>
+    //                     <CardBody>
+    //                         <CardTitle>{dish.name}</CardTitle>
+    //                         <CardText>{dish.description}</CardText>
+    //                     </CardBody>
+    //                     </Card>
+    //                     <div className="card2">
+    //                     <h1>Comments</h1>
+    //                     {dish.comments.map(comment => {
+    //                         return(
+    //                             <li key={comment.id}>
+    //                                 <h3>Author: {comment.author}</h3>
+    //                                 <p>{comment.comment}</p>
+    //                                 <p>{comment.date}</p>
+    //                             </li>
+    //                         );
+    //                     })}
+    //                     </div>
+    //                 </div>
+    //             </React.Fragment>
+    //         );
+    //     }
+    //     else {
+    //         return(
+    //             <div></div>
+    //         );
+    //     }
+    // };
 
     const menu = props.dishes.map(dish => {
             return(
@@ -49,7 +67,8 @@ const Menu = (props) => {
                     {menu}
             </div>
             <div className="row">
-                {renderDish(selected)}
+                <DishDetail selected={selected}/>
+
             </div>
         </div>
     );

@@ -1,0 +1,11 @@
+.contain {
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .contain {
+        flex-direction: column;
+    }
+}
