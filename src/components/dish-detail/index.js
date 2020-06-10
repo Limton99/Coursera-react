@@ -5,20 +5,26 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from '../Loading';
 import {baseUrl} from "../../baseUrl";
 import './detail.css';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
 
 const RenderComments = (props) => {
     return(
         <div className="card2">
             <h1>Comments</h1>
-            {props.comments.map(comment => {
-                return(
-                    <li key={comment.id}>
-                        <h3>Author: {comment.author}</h3>
-                        <p>{comment.comment}</p>
-                        <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
-                    </li>
-                );
-            })}
+            <Stagger in>
+                {props.comments.map(comment => {
+                    return(
+                        <Fade in>
+                            <li key={comment.id}>
+                                <h3>Author: {comment.author}</h3>
+                                <p>{comment.comment}</p>
+                                <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                            </li>
+                        </Fade>
+                    );
+                })}
+            </Stagger>
             <CommentForm dishId={props.dishId} postComment={props.postComment} />
 
 
@@ -50,20 +56,26 @@ const DishDetail = (props) => {
         }
         else if (props.dish != null) {
             return(
-                <React.Fragment>
-                    <div className="contain">
-                        <Card className="card1">
-                            <CardImg top src={baseUrl + dish.image} alt={dish.name} />                            <CardBody>
-                                <CardTitle>{dish.name}</CardTitle>
-                                <CardText>{dish.description}</CardText>
-                            </CardBody>
-                        </Card>
-                        <RenderComments comments={comments}
-                                        postComment={props.postComment}
-                                        dishId={dish.id}
-                        />
-                    </div>
-                </React.Fragment>
+                <FadeTransform
+                    in
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+                    <React.Fragment>
+                        <div className="contain">
+                            <Card className="card1">
+                                <CardImg top src={baseUrl + dish.image} alt={dish.name} />                            <CardBody>
+                                    <CardTitle>{dish.name}</CardTitle>
+                                    <CardText>{dish.description}</CardText>
+                                </CardBody>
+                            </Card>
+                            <RenderComments comments={comments}
+                                            postComment={props.postComment}
+                                            dishId={dish.id}
+                            />
+                        </div>
+                    </React.Fragment>
+                </FadeTransform>
             );
         }
         else {
