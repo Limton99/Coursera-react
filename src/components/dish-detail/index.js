@@ -19,7 +19,7 @@ const RenderComments = (props) => {
                     </li>
                 );
             })}
-            <CommentForm dishId={props.dishId} addComment={props.addComment}/>
+            <CommentForm dishId={props.dishId} postComment={props.postComment} />
 
 
         </div>
@@ -59,7 +59,7 @@ const DishDetail = (props) => {
                             </CardBody>
                         </Card>
                         <RenderComments comments={comments}
-                                        addComment={addComment}
+                                        postComment={props.postComment}
                                         dishId={dish.id}
                         />
                     </div>
@@ -117,7 +117,7 @@ export class CommentForm extends Component {
     handleSubmit(values){
         this.toggleModal();
 
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
@@ -155,7 +155,7 @@ export class CommentForm extends Component {
                                     </Row>
 
                                     <Row className="form-group">
-                                        <Label htmlFor="feedback" md={2}>Your feedback</Label>
+                                        <Label htmlFor="comment" md={2}>Your feedback</Label>
                                         <Col md={10}>
                                             <Control.textarea model=".message" id="message" name="message" rows="6" className="form-control" validators={{ required }} />
                                             <Errors className="text-danger" model=".message" show="touched" messages={{ required: 'Required'}} />
