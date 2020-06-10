@@ -1,13 +1,14 @@
 import { DISHES } from '../../shared/dishes';
 import * as ActionTypes from './ActionTypes';
+import {baseUrl} from "../../baseUrl";
 
 export const fetchDishes = () => (dispatch) => {
 
     dispatch(dishesLoading(true));
 
-    setTimeout(() => {
-        dispatch(addDishes(DISHES));
-    }, 2000);
+    return fetch(baseUrl+'dishes')
+        .then(response => response.json())
+        .then(dishes => dispatch(addDishes(dishes)));
 }
 
 export const dishesLoading = () => ({

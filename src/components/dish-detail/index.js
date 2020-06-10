@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from '../Loading';
+import {baseUrl} from "../../baseUrl";
 import './detail.css';
 
 const RenderComments = (props) => {
@@ -52,8 +53,7 @@ const DishDetail = (props) => {
                 <React.Fragment>
                     <div className="contain">
                         <Card className="card1">
-                            <CardImg width="100%" object src={dish.image} alt={dish.name}/>
-                            <CardBody>
+                            <CardImg top src={baseUrl + dish.image} alt={dish.name} />                            <CardBody>
                                 <CardTitle>{dish.name}</CardTitle>
                                 <CardText>{dish.description}</CardText>
                             </CardBody>
