@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
 import './App.css';
 import Header from "../header";
-import Menu from "../menu";
-import {DISHES} from "../../shared/dishes";
+import Main from "../main";
+import Footer from "../footer";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 function App() {
-    const [dishes, setState] = useState(DISHES);
 
 
   return (
     <div className="App">
-      <Header />
-      <Menu dishes={dishes}/>
+        <Router>
+          <Header />
+          <Main />
+          <Footer />
+        </Router>
     </div>
   );
 }

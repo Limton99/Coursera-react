@@ -1,8 +1,11 @@
 import React from "react";
 import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
+import './detail.css'
+
+//I use react hooks
 
 const DishDetail = (props) => {
-    const {selected} = props;
+    const {dish} = props;
     const render = (dish) => {
         if(dish != null) {
             return(
@@ -22,7 +25,7 @@ const DishDetail = (props) => {
                                     <li key={comment.id}>
                                         <h3>Author: {comment.author}</h3>
                                         <p>{comment.comment}</p>
-                                        <p>{comment.date}</p>
+                                        <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                                     </li>
                                 );
                             })}
@@ -41,7 +44,7 @@ const DishDetail = (props) => {
 
    return (
        <div>
-           {render(selected)}
+           {render(dish)}
        </div>
    );
 };
