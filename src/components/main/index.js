@@ -7,6 +7,7 @@ import DishDetail from "../dish-detail";
 import Home from "../Home";
 import Contact from "../Contact";
 import About from "../about/about";
+import { addComment} from "../../redux/actions/CommentAction";
 
 
 class Main extends Component {
@@ -31,7 +32,9 @@ class Main extends Component {
         const DishWithId = ({match}) => {
             return(
                 <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
-                            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+                            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+                            addComment={this.props.addComment}
+                />
             );
         };
 
@@ -70,6 +73,12 @@ const mapStateToProps = state => {
         promotions: state.promotions,
         leaders: state.leaders
     }
-}
+};
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => ({
+
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

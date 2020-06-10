@@ -4,9 +4,28 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import './detail.css'
 
+const RenderComments = (props) => {
+    return(
+        <div className="card2">
+            <h1>Comments</h1>
+            {props.comments.map(comment => {
+                return(
+                    <li key={comment.id}>
+                        <h3>Author: {comment.author}</h3>
+                        <p>{comment.comment}</p>
+                        <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                    </li>
+                );
+            })}
+            <CommentForm dishId={props.dishId} addComment={props.addComment}/>
+
+
+        </div>
+    );
+}
 
 const DishDetail = (props) => {
-    const {dish, comments} = props;
+    const {dish, comments, addComment} = props;
     console.log(comments.id)
     const render = (dish) => {
         if(dish != null) {
@@ -20,21 +39,10 @@ const DishDetail = (props) => {
                                 <CardText>{dish.description}</CardText>
                             </CardBody>
                         </Card>
-                        <div className="card2">
-                            <h1>Comments</h1>
-                            {comments.map(comment => {
-                               return(
-                                   <li key={comment.id}>
-                                       <h3>Author: {comment.author}</h3>
-                                       <p>{comment.comment}</p>
-                                       <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
-                                   </li>
-                               );
-                            })}
-                            <CommentForm />
-
-
-                        </div>
+                        <RenderComments comments={comments}
+                                        addComment={addComment}
+                                        dishId={dish.id}
+                        />
                     </div>
                 </React.Fragment>
             );
@@ -90,8 +98,7 @@ export class CommentForm extends Component {
     handleSubmit(values){
         this.toggleModal();
 
-        console.log('comment:', values);
-        alert('comment:' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
