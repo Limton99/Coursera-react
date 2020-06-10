@@ -10,6 +10,8 @@ import About from "../about/about";
 import { addComment, fetchComments, fetchPromos, postComment} from "../../redux/actions/CommentAction";
 import { fetchDishes} from "../../redux/actions/DishAction";
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 
 
 
@@ -70,14 +72,18 @@ class Main extends Component {
 
 
             <div>
-                <Switch>
-                    <Route path='/home' component={HomePage} />
-                    <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
-                    <Route path='/menu/:dishId' component={DishWithId} />
-                    <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
-                    <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders}/>} />} />
-                    <Redirect to="/home" />
-                </Switch>
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                        <Switch>
+                            <Route path='/home' component={HomePage} />
+                            <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
+                            <Route path='/menu/:dishId' component={DishWithId} />
+                            <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+                            <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders}/>} />} />
+                            <Redirect to="/home" />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
 
             </div>
         );
@@ -103,4 +109,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
