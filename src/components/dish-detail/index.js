@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Row, Col, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import './detail.css'
+import { Loading } from '../Loading';
+import './detail.css';
 
 const RenderComments = (props) => {
     return(
@@ -28,7 +29,25 @@ const DishDetail = (props) => {
     const {dish, comments, addComment} = props;
     console.log(comments.id)
     const render = (dish) => {
-        if(dish != null) {
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dish != null) {
             return(
                 <React.Fragment>
                     <div className="contain">
